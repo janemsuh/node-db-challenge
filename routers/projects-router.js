@@ -14,8 +14,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const { id } = req.params.id;
-        const project = await db('projects').where({ id }).first();
+        const project = await db('projects')
+            .where('id', req.params.id)
+            .first();
         if (!project) {
             return res.status(404).json({
                 message: 'Project does not exist.'

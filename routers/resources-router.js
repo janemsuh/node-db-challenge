@@ -14,8 +14,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const { id } = req.params.id;
-        const resource = await db('resources').where({ id }).first();
+        const resource = await db('resources')
+            .where('id', req.params.id)
+            .first();
         if (!resource) {
             return res.status(404).json({
                 message: 'Resource does not exist.'

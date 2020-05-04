@@ -24,10 +24,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const { id } = req.params.id;
         const task = await db('tasks as t')
             .join('projects as p', 'p.id', 't.project_id')
-            .where('t.id', { id })
+            .where('t.id', req.params.id)
             .select(
                 't.id',
                 't.description',
