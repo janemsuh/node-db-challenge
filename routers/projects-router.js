@@ -39,4 +39,25 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+router.put('/:id', async (req, res, next) => {
+    try {
+        const payload = {
+            name: req.body.name,
+            description: req.body.description,
+            completed: req.body.completed
+        };
+        res.json(await db('projects').where('id', req.params.id).update(payload));
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        res.json(await db('projects').where('id', req.params.id).del());
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;

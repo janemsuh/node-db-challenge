@@ -58,4 +58,26 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+router.put('/:id', async (req, res, next) => {
+    try {
+        const payload = {
+            description: req.body.description,
+            notes: req.body.notes,
+            completed: req.body.completed,
+            project_id: req.project_id
+        };
+        res.json(await db('tasks').where('id', req.params.id).update(payload));
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/:id', async (req, res, next) => {
+    try {
+        res.json(await db('tasks').where('id', req.params.id).del());
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;
